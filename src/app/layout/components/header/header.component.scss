@@ -1,0 +1,17 @@
+header{
+  background-color: white;
+  bottom: 0;
+  left: 0;
+}
+.site-header { 
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.header-logo{
+  height: auto;
+  width: 160px;
+}

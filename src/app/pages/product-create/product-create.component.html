@@ -1,0 +1,125 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="header-container">
+      <h1 class="title">Formulario de Registro</h1>
+    </div>
+    <div class="body-container">
+      <form novalidate [formGroup]="createForm" class="create-form" autocomplete="off">
+        <div class="row">
+          <div class="col-md-6 input-text">
+            <label for="product-id">ID</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              formControlName="id"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['id'].invalid && createForm.controls['id'].touched,
+                'valid': createForm.controls['id'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['id'].invalid && createForm.controls['id'].touched,
+                'invisible': createForm.controls['id'].valid
+              }"
+            >ID no válido!</div>
+          </div>
+          <div class="col-md-6 input-text">
+            <label for="product-id">Nombre</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              formControlName="name"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['name'].invalid && createForm.controls['name'].touched,
+                'valid': createForm.controls['name'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['name'].invalid && createForm.controls['name'].touched,
+                'invisible': createForm.controls['name'].valid
+              }"
+            >Este campo es requerido!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 input-text">
+            <label for="product-id">Descripción</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              formControlName="description"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['description'].invalid && createForm.controls['description'].touched,
+                'valid': createForm.controls['description'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['description'].invalid && createForm.controls['description'].touched,
+                'invisible': createForm.controls['description'].valid
+              }"
+            >Este campo es requerido!</div>
+          </div>
+          <div class="col-md-6 input-text">
+            <label for="product-id">Logo</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              formControlName="logo"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['logo'].invalid && createForm.controls['logo'].touched,
+                'valid': createForm.controls['logo'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['logo'].invalid && createForm.controls['logo'].touched,
+                'invisible': createForm.controls['logo'].valid
+              }"
+            >Este campo es requerido!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 input-text">
+            <label for="product-id">Fecha Liberación</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              placeholder="23/09/2024"
+              formControlName="date_release"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['date_release'].invalid && createForm.controls['date_release'].touched,
+                'valid': createForm.controls['date_release'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['date_release'].invalid && createForm.controls['date_release'].touched,
+                'invisible': createForm.controls['date_release'].valid
+              }"
+            >Este campo es requerido!</div>
+          </div>
+          <div class="col-md-6 input-text">
+            <label for="product-id">Fecha Revisión</label>
+            <input type="text" name="product-id" id="product-id" class="input-style"
+              placeholder="23/09/2024"
+              formControlName="date_revision"
+              [ngClass]="{ 
+                'is-invalid': createForm.controls['date_revision'].invalid && createForm.controls['date_revision'].touched,
+                'valid': createForm.controls['date_revision'].valid
+              }"
+            >
+            <div 
+              class="invalid-feedback"
+              [ngClass]="{ 
+                'visible': createForm.controls['date_revision'].invalid && createForm.controls['date_revision'].touched,
+                'invisible': createForm.controls['date_revision'].valid
+              }"
+            >Este campo es requerido!</div>
+          </div>
+        </div>
+        <div class="row footer-container">
+          <button class="btn btn-secondary" (click)="cleanForm()">Reiniciar</button>
+          <button class="btn btn-primary" (click)="createProduct()">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

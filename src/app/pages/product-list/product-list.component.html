@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="container">
+    <div class="header-container">
+      <div class="search-container">
+        <input type="text" name="search-input" id="search-input" class="my-search" placeholder="Buscar..." (keyup)="searchProduct($event)">
+      </div>
+      <div class="create-container">
+        <button class="btn-primary" (click)="goCreate()">Agregar</button>
+      </div>
+    </div>
+    <div class="body-container">
+      <table class="table-body">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Nombre del Producto</th>
+            <th>Descripción</th>
+            <th>Fecha de Liberación</th>
+            <th>Fecha de Reestructuración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="filtredProducts.length > 0">
+            <tr *ngFor="let product of filtredProducts">
+              <td>{{product.logo}}</td>
+              <td>{{product.name}}</td>
+              <td>{{product.description}}</td>
+              <td>{{product.date_release | date: 'dd / MM / yyyy'}}</td>
+              <td>{{product.date_revision | date: 'dd / MM / yyyy'}}</td>
+            </tr>
+          </ng-container>
+          <ng-container  *ngIf="filtredProducts.length == 0">
+            <tr *ngFor="let product of products">
+              <td>{{product.logo}}</td>
+              <td>{{product.name}}</td>
+              <td>{{product.description}}</td>
+              <td>{{product.date_release | date: 'dd / MM / yyyy'}}</td>
+              <td>{{product.date_revision | date: 'dd / MM / yyyy'}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="result-counter">
+        <div class="results">
+          <span class="text">{{counter}} resultados</span>
+        </div>
+        <div class="limit">
+          <select name="limit" id="limit" class="limit-select" (change)="limitProductList($event)">
+            <option *ngFor="let l of limit" value={{l.value}}>{{l.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
