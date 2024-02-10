@@ -1,1 +1,22 @@
-<p>error404 works!</p>
+<div>
+  <div class="logo-container">
+    <a (click)="routeToDashboard()">
+      <img
+        alt="Logo"
+        src="./assets/media/logos/404.png"
+        class="main-logo"
+      />
+    </a>
+    <div class="pt-lg-10">
+      <router-outlet></router-outlet>
+      <div class="text-center">
+        <h2
+          (click)="routeToDashboard()"
+          class="btn btn-lg btn-primary fw-bolder cursor-pointer"
+        >
+          Ir a Inicio
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>

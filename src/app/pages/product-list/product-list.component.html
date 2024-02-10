@@ -1,13 +1,13 @@
 <div class="container-fluid">
-  <div class="container">
-    <div class="header-container">
-      <div class="search-container">
-        <input type="text" name="search-input" id="search-input" class="my-search" placeholder="Buscar..." (keyup)="searchProduct($event)">
-      </div>
-      <div class="create-container">
-        <button class="btn-primary" (click)="goCreate()">Agregar</button>
-      </div>
+  <div class="header-container">
+    <div class="search-container">
+      <input type="text" name="search-input" id="search-input" class="my-search" placeholder="Search..." (keyup)="searchProduct($event)">
     </div>
+    <div class="create-container">
+      <button class="btn-primary" (click)="goCreate()">Agregar</button>
+    </div>
+  </div>
+  <div class="container">
     <div class="body-container">
       <table class="table-body">
         <thead>
@@ -17,16 +17,31 @@
             <th>Descripción</th>
             <th>Fecha de Liberación</th>
             <th>Fecha de Reestructuración</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <ng-container *ngIf="filtredProducts.length > 0">
-            <tr *ngFor="let product of filtredProducts">
-              <td>{{product.logo}}</td>
+            <tr *ngFor="let product of filtredProducts; index as i">
+              <td><img class="product-logo" src="{{product.logo}}" alt="logo"></td>
               <td>{{product.name}}</td>
               <td>{{product.description}}</td>
               <td>{{product.date_release | date: 'dd / MM / yyyy'}}</td>
               <td>{{product.date_revision | date: 'dd / MM / yyyy'}}</td>
+              <td>
+                <div class="dropbtn" (click)="showMenuContextual(i)">
+                  <div class="image-content">
+                    <img src="./assets/fonts/fontawesome/ellipsis-vertical-solid.svg" alt="" class="menu-icon">
+                  </div>
+                  <div class="dropdown">
+                    <div id="myDropdown-{{i}}" class="dropdown-content">
+                      <span (click)="editProduct(product.id)">Editar</span>
+                      <span (click)="showModalDelete(product.id,product.name)">Eliminar</span>
+                    </div>
+                  </div>
+
+                </div>
+              </td>
             </tr>
           </ng-container>
           <ng-container  *ngIf="filtredProducts.length == 0">
@@ -36,19 +51,47 @@
               <td>{{product.description}}</td>
               <td>{{product.date_release | date: 'dd / MM / yyyy'}}</td>
               <td>{{product.date_revision | date: 'dd / MM / yyyy'}}</td>
+              <td>
+                <div class="menu-icon">
+                  <div class="menu-content">
+                    <span (click)="editProduct(product.id)">Editar</span>
+                    <span (click)="showModalDelete(product.id,product.name)">Eliminar</span>
+                  </div>
+                </div>
+              </td>
             </tr>
           </ng-container>
         </tbody>
       </table>
-      <div class="result-counter">
-        <div class="results">
-          <span class="text">{{counter}} resultados</span>
-        </div>
-        <div class="limit">
-          <select name="limit" id="limit" class="limit-select" (change)="limitProductList($event)">
-            <option *ngFor="let l of limit" value={{l.value}}>{{l.name}}</option>
-          </select>
-        </div>
+    </div>
+    <div class="result-counter">
+      <div class="results">
+        <span class="text">{{counter}} resultados</span>
+      </div>
+      <div class="pagination-content">
+        <app-pagination [counter]="fullCounter" [limit]="limitCounter" [totalPages]="totalPages"></app-pagination>
+      </div>
+      <div class="limit">
+        <select name="limit" id="limit" class="limit-select" (change)="limitProductList($event)">
+          <option *ngFor="let l of limit" value={{l.value}}>{{l.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="delete-Modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header" >
+      <span class="close" (click)="hideModalDelete()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>¿Estás seguro de eliminar el producto {{productTitle}}?</p>
+    </div>
+    <div class="modal-footer">
+      <div class="footer-container">
+        <button type="button" class="btn btn-secondary" (click)="hideModalDelete()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="deleteProduct(productId)">Confirmar</button>
       </div>
     </div>
   </div>

@@ -5,6 +5,11 @@ import { LayoutComponent } from './layout/layout.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/products',
+    pathMatch: 'full'
+  },
+  {
+    path: 'products',
     loadChildren: () => import('./layout/layout.module').then((m) => m.LayoutModule)
   },
   { 

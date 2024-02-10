@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { iProduct } from 'src/app/core/interfaces/interfaces';
-import { restApiService } from 'src/app/core/services/rest-api.service';
-import { successmsg, errormsg, warningmsg } from 'src/app/helpers/helpers';
+import { Router } from '@angular/router';
+import { iProduct } from '@app/core/interfaces/interfaces';
+import { restApiService } from '@app/core/services/rest-api.service';
+import { successmsg, errormsg, warningmsg } from '@app/helpers/helpers';
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-create.component.html',
@@ -11,11 +12,10 @@ import { successmsg, errormsg, warningmsg } from 'src/app/helpers/helpers';
 export class ProductCreateComponent implements OnInit{
   
   createForm!: FormGroup;
-  today : any = new Date().toISOString().split('T')[0];
+  today : any = new Date().toLocaleDateString("en-CA");
+  authorId: number = 1;
   
-  constructor(private formBuilder: FormBuilder,private api: restApiService){
-
-  }
+  constructor(private formBuilder: FormBuilder,private api: restApiService,private router: Router){}
 
   
   ngOnInit(): void {
@@ -39,19 +39,20 @@ export class ProductCreateComponent implements OnInit{
         date_release: this.formatDate(this.createForm.value['date_release']),
         date_revision: this.formatDate(this.createForm.value['date_revision'])
       }
-      this.api.validateProductId(model.id).subscribe({
+      this.api.validateProductId(this.authorId,model.id).subscribe({
         next: (response: any) => {
           if(response === false){
             let today_date = new Date(this.today);
             let release = new Date(model.date_release);
             let revision = new Date(model.date_revision);
-            let estimate_revision = new Date(`${today_date.getFullYear() + 1}-${today_date.getMonth()}-${today_date.getDate()}`);
+            let estimate_revision = new Date(`${release.getFullYear() + 1}-${release.getMonth() < 10 ? "0"+(release.getMonth() + 1).toString():release.getMonth() + 1}-${release.getDate() < 10 ?"0"+(release.getDate() + 1).toString(): release.getDate() + 1}`);
             if(release.getTime() >= today_date.getTime()){
-              if(revision.getTime() === estimate_revision.getTime()){
-                this.api.createProduct(model).subscribe({
+              if(revision.getTime() == estimate_revision.getTime()){
+                this.api.createProduct(this.authorId,model).subscribe({
                   next: (res:iProduct) => {
                     if(res.id == model.id){
                       successmsg("Producto creado correctamente");
+                      this.cleanForm();
                     }
                   }
                 })

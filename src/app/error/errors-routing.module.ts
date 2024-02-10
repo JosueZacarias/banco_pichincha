@@ -17,7 +17,6 @@ const routes: Routes = [
         path: '500',
         component: Error500Component,
       },
-      { path: '', redirectTo: '404', pathMatch: 'prefix' },
       { path: '**', redirectTo: '404', pathMatch: 'prefix' },
     ],
   },

@@ -1,0 +1,22 @@
+ul.pagination {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+ul.pagination li {
+  display: inline;
+  cursor: pointer;
+}
+
+ul.pagination li span {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+ul.pagination li span.active {
+  background-color: #fcfd9786;
+  color: black;
+}

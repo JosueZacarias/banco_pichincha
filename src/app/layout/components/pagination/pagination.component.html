@@ -1,0 +1,7 @@
+<nav aria-label="Paginación" class="ulpgcds-pager">
+  <ul class="pagination">
+    <li><span>«</span></li>
+    <li *ngFor="let i of totalPages; let j = index" (click)="changePage(j)"><span class="remove-active" [ngClass]="j == 0? 'active':''" id="page-item-{{j}}">{{j + 1}}</span></li>
+    <li><span>»</span></li>
+  </ul>
+</nav> 

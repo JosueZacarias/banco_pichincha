@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { iProduct } from 'src/app/core/interfaces/interfaces';
-import { restApiService } from 'src/app/core/services/rest-api.service';
+import { iProduct } from '@app/core/interfaces/interfaces';
+import { restApiService } from '@app/core/services/rest-api.service';
+import { errormsg, successmsg } from '@app/helpers/helpers';
 
 @Component({
   selector: 'app-product-list',
@@ -9,10 +10,18 @@ import { restApiService } from 'src/app/core/services/rest-api.service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit{
-  counter: string = "4";
+  counter: string = "";
   limit!: Array<any>;
   products!: Array<iProduct>;
   filtredProducts: Array<iProduct> = [];
+  productTitle: string = '';
+  authorId: number = 10;
+  productId : string = '';
+  page: number = 1;
+  limitCounter : number = 5;
+  fullCounter : number = 0;
+  totalPages: Array<number> = [];
+
 
   constructor(private api: restApiService,private router: Router){
 
@@ -37,13 +46,23 @@ export class ProductListComponent implements OnInit{
   }
 
   getProducts(){
-    this.api.getProductList().subscribe({
-      next: (response: any) => {
-        this.counter = response.length;
-        this.products = response;
-        this.filtredProducts = response.slice(0,5);
-      }
-    });
+      this.api.getProductList(this.authorId).subscribe({
+        next: (response: any) => {
+          this.products = response;
+          this.filtredProducts = response.slice(0,this.limit[0].value);
+          this.counter = this.filtredProducts.length.toString();
+          this.fullCounter = this.products.length;
+          this.limitCounter = parseInt(this.counter);
+          if(this.fullCounter > 0){
+            let pages = Math.round(this.fullCounter/this.limitCounter);
+            for(let i = 1; i <= pages; i++){
+              this.totalPages.push(i);
+            }
+          }else{
+            this.totalPages.push(1);
+          }
+        }
+      });
   }
 
   searchProduct(filter:any){
@@ -72,10 +91,47 @@ export class ProductListComponent implements OnInit{
       this.filtredProducts = [];
       this.counter = this.products.length.toString();
     }
+    this.fullCounter = parseInt(this.counter);
+    this.limitCounter = this.filtredProducts.length;
   }
 
   goCreate(){
-    this.router.navigate(['/create-product'])
+    this.router.navigate(['/products/create'])
+  }
+
+  showMenuContextual(elementIndex : number){
+    document.getElementById(`myDropdown-${elementIndex}`)?.classList.toggle("show");
+  }
+
+  showModalDelete(id:string,name:string){
+    document.getElementById('delete-Modal')?.classList.toggle("show");
+    this.productTitle = name;
+    this.productId = id;
+  }
+
+  hideModalDelete(){
+    document.getElementById('delete-Modal')?.classList.toggle("show");
+    this.productTitle = "";
+  }
+
+  editProduct(id:string){
+    this.router.navigate([`/products/update/${id}`])
+  }
+
+
+  deleteProduct(id:string){
+    this.api.deleteProduct(this.authorId,id).subscribe({
+      next: (response: any) => {
+        console.log(response)
+        // if(response){
+        //   successmsg(response);
+        //   this.getProducts();
+        // }else{
+        //   errormsg(response);
+        // }
+      }
+    });
+
   }
 
   

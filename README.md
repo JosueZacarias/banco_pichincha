@@ -1,7 +1,11 @@
 # BancoPichincha
 
-ejecutar npm install - para la instalación de paquetes
+npm install - instalar paquetes
 
-Ejecutar ng serve para levantar el servicio
+npm run test - testear
 
-ingresar a la direccion: http://localhost:4200/products como página inicial
+npm run test:coverage
+
+run ng serve - para levantar el servicio
+
+go to: http://localhost:4200

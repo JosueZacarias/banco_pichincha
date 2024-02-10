@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorsModule } from './error/errors.module';
-import { PagesModule } from './pages/pages.module';
 import { LayoutModule } from './layout/layout.module';
 
 
@@ -16,7 +15,6 @@ import { LayoutModule } from './layout/layout.module';
     BrowserModule,
     AppRoutingModule,
     ErrorsModule,
-    PagesModule,
     LayoutModule,
     HttpClientModule
   ],
